@@ -21,7 +21,7 @@ class OrangeHRMLogin:
         time.sleep(2)
 
     def navigateToMOdule(self,module):
-        self.driver.find_element(By.XPATH, f"//li[contains(., '{module}')]").click()
+        self.wait.until(EC.presence_of_element_located((By.XPATH, f"//li[contains(., '{module}')]"))).click()
 
     def addEmployee(self,employee_list):
         for emp in employee_list:
