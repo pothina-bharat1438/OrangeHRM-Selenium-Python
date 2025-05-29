@@ -29,7 +29,7 @@ class OrangeHRMLogin:
             self.wait.until(EC.presence_of_element_located(locators.FIRST_NAME)).send_keys(emp['firstName'])
             self.wait.until(EC.presence_of_element_located(locators.LAST_NAME)).send_keys(emp['lastName'])
             self.wait.until(EC.presence_of_element_located(locators.SUBMIT_BTN)).click()
-            time.sleep(5)
+            time.sleep(10)
 
         self.wait.until(EC.presence_of_element_located(locators.EMP_LIST)).click()
 
