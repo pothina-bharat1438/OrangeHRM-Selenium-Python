@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 import time
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from objectLocators import locators
 
 
 class OrangeHRMLogin:
@@ -13,9 +14,9 @@ class OrangeHRMLogin:
 
     def login(self, url, username, password):
         self.driver.get(url)
-        self.wait.until(EC.presence_of_element_located((By.NAME, "username"))).send_keys(username)
-        self.wait.until(EC.presence_of_element_located((By.NAME, "password"))).send_keys(password)
-        self.driver.find_element(By.XPATH, "//button[@type='submit']").click()
+        self.wait.until(EC.presence_of_element_located(locators.USERNAME)).send_keys(username)
+        self.wait.until(EC.presence_of_element_located(locators.PASSWORD)).send_keys(password)
+        self.wait.until(EC.presence_of_element_located(locators.LOGIN_BTN)).click()
         print("Successfully Logged in:", self.driver.current_url)
         time.sleep(2)
 
@@ -24,13 +25,13 @@ class OrangeHRMLogin:
 
     def addEmployee(self,employee_list):
         for emp in employee_list:
-            self.wait.until(EC.presence_of_element_located((By.XPATH, "//nav//ul//li[contains(., 'Add Employee')]"))).click()
-            self.wait.until(EC.presence_of_element_located((By.NAME, "firstName"))).send_keys(emp['firstName'])
-            self.wait.until(EC.presence_of_element_located((By.NAME, "lastName"))).send_keys(emp['lastName'])
-            self.wait.until(EC.presence_of_element_located((By.XPATH,"//button[@type='submit']"))).click()
+            self.wait.until(EC.presence_of_element_located(locators.ADD_EMP)).click()
+            self.wait.until(EC.presence_of_element_located(locators.FIRST_NAME)).send_keys(emp['firstName'])
+            self.wait.until(EC.presence_of_element_located(locators.LAST_NAME)).send_keys(emp['lastName'])
+            self.wait.until(EC.presence_of_element_located(locators.SUBMIT_BTN)).click()
             time.sleep(5)
 
-        self.wait.until(EC.presence_of_element_located((By.XPATH, "//nav//ul//li[contains(., 'Employee List')]"))).click()
+        self.wait.until(EC.presence_of_element_located(locators.EMP_LIST)).click()
 
         for emp in employee_list:
             firstNameElement = self.wait.until(EC.presence_of_element_located((By.XPATH, f"//div/div[@class='oxd-table-card']/div/div[contains(., '{emp['firstName']}')]/div")))
@@ -42,8 +43,8 @@ class OrangeHRMLogin:
             print(actualFirstName, actualLastName,"--Name Verified--")
 
     def logout(self):
-        self.wait.until(EC.presence_of_element_located((By.XPATH, "//span[@class='oxd-userdropdown-tab']"))).click()
-        self.wait.until(EC.presence_of_element_located((By.XPATH, "//ul[@class='oxd-dropdown-menu']/li[contains(.,'Logout')]"))).click()
+        self.wait.until(EC.presence_of_element_located(locators.PROFILE_OPTIONS)).click()
+        self.wait.until(EC.presence_of_element_located(locators.LOGOUT_BTN)).click()
 
     def close(self):
         self.driver.close()
